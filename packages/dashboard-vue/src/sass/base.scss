@@ -1,0 +1,38 @@
+@import './colors.scss';
+
+.card {
+  position: relative;
+  padding: 16px;
+  background-color: $white;
+  box-shadow: $shadow;
+  border-left: 4px solid transparent;
+  margin-bottom: 1px;
+  cursor: default;
+  transition: all 0.15s;
+
+  &.passed {
+    border-left-color: $green;
+  }
+
+  &.failed {
+    border-left-color: $red;
+  }
+
+  &.pending {
+    border-left-color: $blue;
+  }
+}
+
+.icon {
+  &.passed {
+    color: $green;
+  }
+
+  &.failed {
+    color: $red;
+  }
+
+  &.pending {
+    color: $blue;
+  }
+}

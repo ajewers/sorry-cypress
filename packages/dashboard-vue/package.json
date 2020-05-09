@@ -8,11 +8,20 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^1.2.28",
+    "@fortawesome/free-solid-svg-icons": "^5.13.0",
+    "@fortawesome/vue-fontawesome": "^0.1.9",
     "core-js": "^3.6.4",
+    "moment": "^2.25.3",
     "vue": "^2.6.11",
+    "vue-apollo": "^3.0.0-beta.11",
+    "vue-cli-plugin-apollo": "~0.21.3",
     "vue-router": "^3.1.6"
   },
   "devDependencies": {
+    "@graphql-codegen/cli": "1.13.5",
+    "@graphql-codegen/fragment-matcher": "1.13.5",
+    "@graphql-codegen/introspection": "1.13.5",
     "@vue/cli-plugin-babel": "~4.3.0",
     "@vue/cli-plugin-eslint": "~4.3.0",
     "@vue/cli-plugin-router": "~4.3.0",
@@ -22,6 +31,7 @@
     "eslint": "^6.7.2",
     "eslint-plugin-import": "^2.20.2",
     "eslint-plugin-vue": "^6.2.2",
+    "graphql-tag": "^2.9.0",
     "node-sass": "^4.12.0",
     "sass-loader": "^8.0.2",
     "vue-template-compiler": "^2.6.11"
@@ -38,7 +48,12 @@
     "parserOptions": {
       "parser": "babel-eslint"
     },
-    "rules": {}
+    "rules": {
+      "arrow-parens": 0,
+      "no-param-reassign": 0,
+      "no-else-return": 0,
+      "indent": 0
+    }
   },
   "browserslist": [
     "> 1%",
