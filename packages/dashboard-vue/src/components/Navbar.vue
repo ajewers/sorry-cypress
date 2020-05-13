@@ -1,9 +1,19 @@
 <template>
-  <div class="navbar-container">
+  <div class="navbar-container" data-cy="navbar-container">
     <!-- <div class="nav-flex fixed title">Sorry Cypress</div> -->
-    <router-link class="nav-flex fixed link" to='/runs'>
+    <router-link
+      class="nav-flex fixed link"
+      to='/runs'
+      data-cy="nav-link-runs">
       <fa-icon icon="database"></fa-icon>
       <span>All Runs</span>
+    </router-link>
+    <router-link
+      class="nav-flex fixed link"
+      to='/test'
+      data-cy="nav-link-test-area">
+      <fa-icon icon="cog"></fa-icon>
+      <span>Test Area</span>
     </router-link>
   </div>
 </template>
@@ -36,9 +46,10 @@ export default {
 
     .nav-flex {
       padding: 10px 24px;
+      margin: 0 8px 0 0;
       line-height: 30px;
       border-bottom: 5px solid transparent;
-      color: #f7f7fa;
+      color: $gray-text;
 
       span {
         margin-left: 12px;
@@ -65,13 +76,18 @@ export default {
       }
 
       &:hover {
+        color: $white-text;
         background-color: $black-light;
+      }
+
+      &.router-link-active {
+        color: $white-text;
+        border-bottom: 5px solid $blue;
       }
 
       &.router-link-exact-active {
         color: $blue;
         background-color: $black-light;
-        border-bottom: 5px solid $blue;
       }
     }
   }

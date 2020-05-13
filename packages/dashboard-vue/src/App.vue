@@ -41,4 +41,16 @@ body {
 .content {
   margin-top: 50px;
 }
+
+::-webkit-scrollbar {
+  width: 0.4em;
+}
+
+::-webkit-scrollbar-track {
+  background-color: $gray-e;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: $gray-b;
+}
 </style>

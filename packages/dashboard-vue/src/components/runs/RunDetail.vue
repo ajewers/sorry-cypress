@@ -6,17 +6,19 @@
         <div class="label fixed">Spec Files</div>
         <div class="line grow" />
       </div>
-      <div class="specs-container">
+      <div class="list-container">
         <div
-          class="spec-row"
+          class="list-row clicky"
           v-for="spec in run.specs"
           :key="spec.spec"
           :class="[{ selected: isSelected(spec) }, specResult(spec)]"
           @click="() => specClicked(spec)">
-          <span class="label">{{ spec.spec }}</span>
+          <div class="icon">
+            <fa-icon :icon="specIcon(spec)" :class="['icon', specResult(spec)]"></fa-icon>
+          </div>
+          <div class="label">{{ spec.spec }}</div>
           <results-summary
             v-if="spec.results"
-            class="spec-results-summary"
             :stats="spec.results.stats" />
         </div>
       </div>
@@ -27,7 +29,7 @@
         <div class="label fixed">{{ selectedFile }}</div>
         <div class="line grow" />
       </div>
-      <cy-video v-if="selected.results" :url="selected.results.videoUrl" />
+      <instance-detail :instanceId="selected.instanceId" />
     </div>
   </div>
 </template>
@@ -36,7 +38,7 @@
 import runResultMixin from '@/mixins/runResult.mixin';
 
 import ResultsSummary from '@/components/results/ResultsSummary.vue';
-import CyVideo from '@/components/media/CyVideo.vue';
+import InstanceDetail from '@/components/instance/InstanceDetail.vue';
 
 export default {
   name: 'run-detail',
@@ -45,7 +47,7 @@ export default {
 
   components: {
     'results-summary': ResultsSummary,
-    'cy-video': CyVideo,
+    'instance-detail': InstanceDetail,
   },
 
   props: {
@@ -74,6 +76,7 @@ export default {
   methods: {
     specClicked(spec) {
       this.selected = spec;
+      console.log(this.selected);
     },
 
     isSelected(spec) {
@@ -91,10 +94,22 @@ export default {
 
       return 'passed';
     },
-  },
 
-  mounted() {
-    console.log(this.run);
+    specIcon(spec) {
+      switch (this.specResult(spec)) {
+        case 'pending':
+          return 'spinner';
+
+        case 'passed':
+          return 'check';
+
+        case 'failed':
+          return 'times';
+
+        default:
+          return 'spinner';
+      }
+    },
   },
 };
 </script>
@@ -147,49 +162,6 @@ export default {
         .label {
           font-size: 1.1rem;
           color: $gray;
-        }
-      }
-
-      .specs-container {
-        max-height: calc(100vh - 260px);
-        overflow-y: auto;
-
-        .spec-row {
-          margin: 6px 0;
-          padding: 12px;
-          text-align: left;
-          cursor: pointer;
-          transition: all 0.15s;
-          border-left: 4px solid transparent;
-          display: flex;
-          flex-direction: row;
-          justify-content: flex-start;
-
-          &:hover,
-          &.selected {
-            background-color: $blue-selected;
-            box-shadow: $shadow;
-          }
-
-          .label {
-            flex: 1 0 auto;
-          }
-
-          .spec-results-summary {
-            flex: 0 1 auto;
-          }
-
-          &.passed {
-            border-left-color: $green;
-          }
-
-          &.failed {
-            border-left-color: $red;
-          }
-
-          &.pending {
-            border-left-color: $blue;
-          }
         }
       }
     }

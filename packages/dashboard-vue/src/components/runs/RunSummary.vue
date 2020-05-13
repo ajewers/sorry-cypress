@@ -59,7 +59,8 @@ import runResultMixin from '@/mixins/runResult.mixin';
 
 import ResultsSummary from '@/components/results/ResultsSummary.vue';
 
-import deleteRunMutation from '@/graphql/deleteRun.graphql';
+import GQL_DEL_RUN from '@/graphql/deleteRun.graphql';
+import GQL_GET_RUNS_FEED from '@/graphql/getRunsFeed.graphql';
 
 export default {
   name: 'run-summary',
@@ -100,7 +101,6 @@ export default {
 
     optionsClicked() {
       this.showOptions = true;
-      console.log(this.showOptions);
     },
 
     hideOptions() {
@@ -109,9 +109,28 @@ export default {
 
     deleteClicked() {
       this.$apollo.mutate({
-        mutation: deleteRunMutation,
+        mutation: GQL_DEL_RUN,
         variables: {
           runId: this.run.runId,
+        },
+        update: (store, { data }) => {
+          const cache = store.readQuery({
+            query: GQL_GET_RUNS_FEED,
+            variables: {
+              cursor: '',
+            },
+          });
+
+          cache.runFeed.runs = cache.runFeed.runs
+          .filter(r => data.deleteRun.runIds.includes(r.runId) === false);
+
+          store.writeQuery({
+            query: GQL_GET_RUNS_FEED,
+            variables: {
+              cursor: '',
+            },
+            data: cache,
+          });
         },
       });
     },
@@ -187,7 +206,7 @@ export default {
 
     .options-menu {
       position: absolute;
-      top: 70px;
+      top: 50px;
       right: 16px;
       background-color: $white;
       box-shadow: $shadow-modal;

@@ -12,6 +12,8 @@ import {
   faEllipsisH,
   faEllipsisV,
   faTrash,
+  faCog,
+  faVideoSlash,
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 
@@ -33,6 +35,8 @@ library.add(
   faEllipsisH,
   faEllipsisV,
   faTrash,
+  faCog,
+  faVideoSlash,
 );
 
 Vue.component('fa-icon', FontAwesomeIcon);

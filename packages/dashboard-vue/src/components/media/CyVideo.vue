@@ -1,7 +1,11 @@
 <template>
-  <div class="video">
-    <div v-if="!url" class="loading">
-     <fa-icon icon="spinner" spin></fa-icon>
+  <div class="video-container">
+    <video v-if="url" class="video" controls autoplay>
+      <source :src="url" type="video/mp4" />
+    </video>
+    <div v-else class="no-video">
+      <fa-icon icon="video-slash"></fa-icon>
+      <span class="label">No video found.</span>
     </div>
   </div>
 </template>
@@ -21,17 +25,30 @@ export default {
 <style lang="scss" scoped>
   @import '../../sass/colors';
 
-  .video {
-    width: 600px;
-    height: 380px;
-    background-color: $black;
+  .video-container {
     margin: auto;
+    margin-bottom: 16px;
     border-radius: 5px;
 
-    .loading {
-      line-height: 380px;
-      font-size: 2rem;
+    .video {
+      width: 100%;
+      box-shadow: $shadow;
+
+      &:focus {
+        outline: none;
+      }
+    }
+
+    .no-video {
+      background-color: $black;
+      padding: 16px;
+      text-align: center;
       color: $white;
+      border-radius: 5px;
+
+      .label {
+        margin-left: 12px;
+      }
     }
   }
 </style>

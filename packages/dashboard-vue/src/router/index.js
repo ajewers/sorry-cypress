@@ -3,6 +3,7 @@ import VueRouter from 'vue-router';
 
 import Runs from '../views/Runs.vue';
 import Run from '../views/Run.vue';
+import CypressTestArea from '../views/CypressTestArea.vue';
 
 Vue.use(VueRouter);
 
@@ -20,6 +21,11 @@ const routes = [
     path: '/runs/:runId',
     name: 'Run',
     component: Run,
+  },
+  {
+    path: '/test',
+    name: 'CypressTestArea',
+    component: CypressTestArea,
   },
 ];
 
