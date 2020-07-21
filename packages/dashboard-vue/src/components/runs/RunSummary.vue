@@ -108,6 +108,22 @@ export default {
     },
 
     deleteClicked() {
+      this.showConfirmModal({
+        title: 'Delete Run',
+        text: 'Are you sure you want to delete this run?',
+        options: [
+          { key: 'cancel', label: 'Cancel' },
+          { key: 'ok', label: 'Delete', class: 'red' },
+        ],
+        callback: this.deleteConfirmed,
+      });
+    },
+
+    deleteConfirmed(result) {
+      if (result !== 'ok') {
+        return;
+      }
+
       this.$apollo.mutate({
         mutation: GQL_DEL_RUN,
         variables: {
@@ -144,7 +160,6 @@ export default {
 
   .run-summary {
     min-height: 43px;
-
     display: flex;
     flex-direction: row;
     justify-content: flex-start;

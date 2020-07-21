@@ -1,36 +1,46 @@
 <template>
-  <div class="run-detail card">
-    <div class="column">
-      <div class="heading">
-        <div class="line fixed" />
-        <div class="label fixed">Spec Files</div>
-        <div class="line grow" />
-      </div>
-      <div class="list-container">
-        <div
-          class="list-row clicky"
-          v-for="spec in run.specs"
-          :key="spec.spec"
-          :class="[{ selected: isSelected(spec) }, specResult(spec)]"
-          @click="() => specClicked(spec)">
-          <div class="icon">
-            <fa-icon :icon="specIcon(spec)" :class="['icon', specResult(spec)]"></fa-icon>
+  <div>
+    <div class="run-detail card">
+      <div class="column" v-if="!selected">
+        <div class="heading">
+          <div class="line fixed" />
+          <div class="label fixed">{{ run.specs.length }} Spec Files</div>
+          <div class="line grow" />
+        </div>
+        <div class="grid-container">
+          <div
+            class="grid-row clicky"
+            v-for="spec in run.specs"
+            :key="spec.spec"
+            :class="[{ selected: isSelected(spec) }, specResult(spec)]"
+            @click="() => specClicked(spec)">
+            <div class="icon">
+              <fa-icon :icon="specIcon(spec)" :class="['icon', specResult(spec)]"></fa-icon>
+            </div>
+            <div class="label">{{ spec.spec }}</div>
+            <results-summary
+              v-if="spec.results"
+              :stats="spec.results.stats" />
           </div>
-          <div class="label">{{ spec.spec }}</div>
+        </div>
+      </div>
+      <div v-else>
+        <div
+          class="selected-spec"
+          :class="[specResult(selected)]">
+          <div class="icon">
+            <fa-icon :icon="specIcon(selected)" :class="['icon', specResult(selected)]"></fa-icon>
+          </div>
+          <div class="label">{{ selected.spec }}</div>
           <results-summary
-            v-if="spec.results"
-            :stats="spec.results.stats" />
+            v-if="selected.results"
+            :stats="selected.results.stats" />
         </div>
       </div>
     </div>
-    <div class="column details" v-if="selected">
-      <div class="heading">
-        <div class="line fixed" />
-        <div class="label fixed">{{ selectedFile }}</div>
-        <div class="line grow" />
-      </div>
-      <instance-detail :instanceId="selected.instanceId" />
-    </div>
+    <instance-detail
+      v-if="selected"
+      :instanceId="selected.instanceId" />
   </div>
 </template>
 
@@ -119,7 +129,6 @@ export default {
   @import '../../sass/base';
 
   .run-detail {
-    min-height: 150px;
     margin-top: -1px;
     padding-top: 30px;
     display: flex;
@@ -127,10 +136,9 @@ export default {
     justify-content: flex-start;
 
     .column {
-      flex: 1 0 auto;
+      flex: 1 1 auto;
       text-align: center;
       margin: 0 20px;
-      max-width: calc(50vw - 85px);
 
       .heading {
         margin-bottom: 20px;
@@ -163,6 +171,41 @@ export default {
           font-size: 1.1rem;
           color: $gray;
         }
+      }
+    }
+
+    .selected-spec {
+      display: flex;
+      flex-direction: row;
+      justify-content: flex-start;
+      padding: 12px;
+
+      .icon {
+        padding: 0 8px 0 4px;
+      }
+
+      .label {
+        flex: 1 0 auto;
+
+        .chevron {
+          color: $gray-a;
+        }
+      }
+
+      &.passed {
+        border-left-color: $green;
+      }
+
+      &.failed {
+        border-left-color: $red;
+      }
+
+      &.pending {
+        border-left-color: $blue;
+      }
+
+      &.skipped {
+        border-left-color: $gray;
       }
     }
   }

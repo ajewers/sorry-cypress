@@ -4,17 +4,20 @@
     <div class="content">
       <router-view />
     </div>
+    <confirm-modal />
   </div>
 </template>
 
 <script>
 import Navbar from '@/components/Navbar.vue';
+import ConfirmModal from '@/components/modal/ConfirmModal.vue';
 
 export default {
   name: 'App',
 
   components: {
     navbar: Navbar,
+    'confirm-modal': ConfirmModal,
   },
 };
 </script>

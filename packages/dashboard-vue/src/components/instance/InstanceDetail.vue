@@ -68,9 +68,16 @@ export default {
 
   methods: {
     testIcon(test) {
-      return test.state === 'passed'
-             ? 'check'
-             : 'times';
+      switch (test.state) {
+        case 'passed':
+          return 'check';
+
+        case 'skipped':
+          return 'redo';
+
+        default:
+          return 'times';
+      }
     },
 
     out(data) {
@@ -83,6 +90,10 @@ export default {
 
 <style lang="scss" scoped>
   @import '../../sass/base';
+
+  .list-container {
+    max-height: calc(100vh - 260px);
+  }
 
   .ms {
     color: $gray-8;

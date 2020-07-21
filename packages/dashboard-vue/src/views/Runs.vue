@@ -7,8 +7,14 @@
         <div v-if="data && data.runFeed">
           <!-- Run summary card -->
           <div v-for="(run, index) in data.runFeed.runs" :key="run.runId">
-            <run-separator :run="run" :runs="data.runFeed.runs" :index="index" />
-            <run-summary :run="run" :isLink="true" />
+            <run-separator
+              :run="run"
+              :runs="data.runFeed.runs"
+              :index="index" />
+            <run-summary
+              class="run-list-item"
+              :run="run"
+              :isLink="true" />
           </div>
 
           <!-- Load more button -->
@@ -69,6 +75,10 @@ export default {
 
   .runs-view {
     padding: 0 20px;
+
+    .run-list-item {
+      margin-bottom: 4px;
+    }
 
     .loading {
       font-size: 2rem;

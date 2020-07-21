@@ -6,7 +6,6 @@
   background-color: $white;
   box-shadow: $shadow;
   border-left: 4px solid transparent;
-  margin-bottom: 1px;
   cursor: default;
   transition: all 0.15s;
 
@@ -35,10 +34,13 @@
   &.pending {
     color: $blue;
   }
+
+  &.skipped {
+    color: $gray;
+  }
 }
 
 .list-container {
-  max-height: calc(100vh - 260px);
   overflow-y: auto;
 
   .list-row {
@@ -83,6 +85,69 @@
 
     &.pending {
       border-left-color: $blue;
+    }
+
+    &.skipped {
+      border-left-color: $gray;
+    }
+  }
+}
+
+.grid-container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  overflow-y: auto;
+  max-width: 100%;
+
+  .grid-row {
+    margin: 6px 0;
+    padding: 12px;
+    text-align: left;
+    transition: all 0.15s;
+    border-left: 4px solid transparent;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    margin-right: 20px;
+    min-width: calc(50vw - 106px);
+
+    &.clicky {
+      cursor: pointer;
+
+      &:hover,
+      &.selected {
+        background-color: $blue-selected;
+        box-shadow: $shadow;
+      }
+    }
+
+    .icon {
+      padding: 0 8px 0 4px;
+    }
+
+    .label {
+      flex: 1 0 auto;
+
+      .chevron {
+        color: $gray-a;
+      }
+    }
+
+    &.passed {
+      border-left-color: $green;
+    }
+
+    &.failed {
+      border-left-color: $red;
+    }
+
+    &.pending {
+      border-left-color: $blue;
+    }
+
+    &.skipped {
+      border-left-color: $gray;
     }
   }
 }
